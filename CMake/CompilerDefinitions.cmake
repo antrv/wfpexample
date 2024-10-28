@@ -1,0 +1,16 @@
+add_compile_definitions(BOOST_BIND_GLOBAL_PLACEHOLDERS)
+add_compile_definitions(BOOST_ASIO_DISABLE_BOOST_COROUTINE)
+add_compile_definitions(BOOST_ASIO_HAS_STRING_VIEW)
+add_compile_definitions(BOOST_ASIO_NO_DEPRECATED)
+#add_compile_definitions(BOOST_ASIO_NO_TS_EXECUTORS)
+
+add_compile_definitions($<$<CONFIG:Debug>:_DEBUG>)
+add_compile_definitions($<$<CONFIG:Release>:NDEBUG>)
+add_compile_definitions(UNICODE)
+add_compile_definitions(_UNICODE)
+
+if(WIN32)
+    #add_compile_definitions(_WIN32_WINNT=_WIN32_WINNT_WIN10)
+    #add_compile_definitions(_WINSOCK_DEPRECATED_NO_WARNINGS)
+    add_compile_definitions(NOMINMAX)
+endif()

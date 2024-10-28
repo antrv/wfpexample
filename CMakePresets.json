@@ -1,0 +1,96 @@
+﻿{
+    "version": 3,
+    "configurePresets": [
+        {
+            "name": "base",
+            "hidden": true,
+            "binaryDir": "${sourceDir}/.tmp/${presetName}",
+            "installDir": "${sourceDir}/.install/${presetName}",
+            "architecture": {
+                "value": "x64",
+                "strategy": "external"
+            },
+            "cacheVariables": {
+                "EXECUTABLE_OUTPUT_PATH": "${sourceDir}/.bin/${presetName}",
+                "LIBRARY_OUTPUT_PATH": "${sourceDir}/.tmp/${presetName}",
+                "CMAKE_BUILD_TYPE": "Debug"
+            }
+        },
+        {
+            "name": "windows-base",
+            "hidden": true,
+            "inherits": "base",
+            "generator": "Visual Studio 17 2022",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            },
+            "toolset": {
+                "value": "host=x64",
+                "strategy": "external"
+            }
+        },
+        {
+            "name": "win-x64-debug",
+            "displayName": "Windows x64 (Debug)",
+            "inherits": "windows-base"
+        },
+        {
+            "name": "win-x64-release",
+            "displayName": "Windows x64 (Release)",
+            "inherits": "windows-base",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release"
+            }
+        },
+        {
+            "name": "linux-base",
+            "hidden": true,
+            "inherits": "base",
+            "generator": "Ninja",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Linux"
+            }
+        },
+        {
+            "name": "linux-debug",
+            "displayName": "Linux (Debug)",
+            "inherits": "linux-base"
+        },
+        {
+            "name": "linux-release",
+            "displayName": "Linux (Release)",
+            "inherits": "linux-base",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release"
+            }
+        },
+        {
+            "name": "mac-base",
+            "hidden": true,
+            "inherits": "base",
+            "generator": "Xcode",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Darwin"
+            }
+        },
+        {
+            "name": "mac-debug",
+            "displayName": "Debug",
+            "inherits": "mac-base"
+        },
+        {
+            "name": "mac-release",
+            "displayName": "Release",
+            "inherits": "mac-base",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release"
+            }
+        }
+    ]
+}

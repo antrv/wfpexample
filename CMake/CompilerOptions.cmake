@@ -1,0 +1,30 @@
+if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+    # using Clang
+    add_compile_options(-Wall -Wextra -Wpedantic)
+    add_compile_options(-fcxx-exceptions -fdata-sections -ffunction-sections -fomit-frame-pointer)
+    add_compile_options(${DEFAULT_CXX_DEBUG_INFORMATION_FORMAT})
+    add_compile_options(${DEFAULT_CXX_EXCEPTION_HANDLING})
+elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+    # using GCC
+    add_compile_options(-Wall -Wextra -Wpedantic)
+    add_compile_options(${DEFAULT_CXX_DEBUG_INFORMATION_FORMAT})
+    add_compile_options(${DEFAULT_CXX_EXCEPTION_HANDLING})
+elseif (CMAKE_CXX_COMPILER_ID STREQUAL "Intel")
+    # using Intel C++
+elseif (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+    # using Visual Studio C++
+    string(REGEX REPLACE "/W[0-4]" "/W4" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
+    add_compile_options(/W4)
+    #add_compile_options(/MP${BUILD_JOBS})
+    add_compile_options(/utf-8)
+    add_compile_options(/external:anglebrackets)
+    add_compile_options(/external:W0)
+    add_compile_options(/external:templates-)
+    add_compile_options("$<$<CONFIG:Release>:/Oi /Gy>")
+    add_compile_options(/Zi /permissive- /sdl /Y- /bigobj)
+    add_compile_options(${DEFAULT_CXX_DEBUG_INFORMATION_FORMAT})
+    add_compile_options(${DEFAULT_CXX_EXCEPTION_HANDLING})
+
+    add_link_options("$<$<CONFIG:Debug>:/INCREMENTAL>")
+    add_link_options("$<$<CONFIG:Release>:/DEBUG /OPT:REF /OPT:ICF /INCREMENTAL:NO>")
+endif()
